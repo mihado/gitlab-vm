@@ -1,0 +1,42 @@
+version: "3.6"
+services:
+  gitlab:
+    image: "gitlab/gitlab-ee:latest"
+    restart: unless-stopped
+    container_name: gitlab
+    hostname: "git.int.valiants.co"
+    env_file:
+      - .env
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url "https://git.int.valiants.co"
+
+    ports:
+      - "2222:22"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - "$GITLAB_HOME/data:/var/opt/gitlab"
+      # cert & key names must match external_url (for nginx)
+      # - ${PWD}/secret/certs/letsencrypt/fullchain.pem:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
+      # - ${PWD}/secret/certs/letsencrypt/privkey.pem:/etc/gitlab/ssl/git.int.valiants.co.key:ro
+      # - ${PWD}/secret/certs/zerossl/fullchain.crt:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
+      # - ${PWD}/secret/certs/zerossl/private.key:/etc/gitlab/ssl/git.int.valiants.co.key:ro
+      - ${PWD}/secret/certs/mkcert/git.int.crt:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
+      - ${PWD}/secret/certs/mkcert/git.int.key:/etc/gitlab/ssl/git.int.valiants.co.key:ro
+      - ${PWD}/config/gitlab.rb:/etc/gitlab/gitlab.rb
+      - "$GITLAB_HOME/config:/etc/gitlab"
+      - "$GITLAB_HOME/logs:/var/log/gitlab"
+
+  # This is a major PAIN, see reflection note in notion
+  # TL,DR: TLS in docker executor, job token not working etc
+  # gitlab-runner:
+  #   image: "gitlab/gitlab-runner:latest"
+  #   restart: unless-stopped
+  #   container_name: gitlab-runner
+  #   volumes:
+  #     - ${PWD}/config/runner:/etc/gitlab-runner
+  #     - "${PWD}/secret/certs/mkcert/rootCA.pem:/etc/gitlab-runner/certs/ca.crt:ro"
+  #     - /var/run/docker.sock:/var/run/docker.sock
