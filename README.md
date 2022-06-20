@@ -2,7 +2,7 @@ Trying out gitlab using libvirt & docker.
 
 Not entirely working because gitlab-runner.docker executor doesn't play nicely with TLS (even with Let's Encrypt).
 
-I'm gravitating toward the simpler combo (gitea)[https://gitea.io/en-us/] + [tekton](https://tekton.dev/) instead
+I'm gravitating toward the simpler combo [gitea](https://gitea.io/en-us/) + [tekton](https://tekton.dev/) instead
 
 ```sh
 # https://docs.gitlab.com/runner/install/docker.html#register-the-runner
