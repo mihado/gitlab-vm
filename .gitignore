@@ -5,3 +5,7 @@ id_rsa*
 .env
 # direnv
 .envrc
+
+*.tar.gz
+*.deb
+provision-int.sh

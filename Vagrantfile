@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
     server.vm.box = "generic/ubuntu2004"
 
     server.vm.provider :libvirt do |domain|
-      domain.cpus = 2
+      domain.cpus = 8
       domain.memory = 6144
     end
 
@@ -14,6 +14,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder "./", "/vagrant", type: "nfs"
 
     server.vm.provision "shell", path: "./provision.sh"
+    server.vm.provision "shell", path: "./provision-int.sh"
   end
 
 end

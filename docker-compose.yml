@@ -40,6 +40,6 @@ services:
   #   restart: unless-stopped
   #   container_name: gitlab-runner
   #   volumes:
-  #     - ${PWD}/config/runner:/etc/gitlab-runner
-  #     - "${PWD}/secret/certs/mkcert/rootCA.pem:/etc/gitlab-runner/certs/ca.crt:ro"
   #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - $GITLAB_HOME/gitlab-runner:/etc/gitlab-runner
+  #     # - "${PWD}/secret/certs/mkcert/rootCA.pem:/etc/gitlab-runner/certs/ca.crt:ro"
