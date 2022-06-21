@@ -18,15 +18,18 @@ services:
 
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - "$GITLAB_HOME/data:/var/opt/gitlab"
+      - ${PWD}/config/gitlab.rb:/etc/gitlab/gitlab.rb
+
       # cert & key names must match external_url (for nginx)
-      # - ${PWD}/secret/certs/letsencrypt/fullchain.pem:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
-      # - ${PWD}/secret/certs/letsencrypt/privkey.pem:/etc/gitlab/ssl/git.int.valiants.co.key:ro
+      - ${PWD}/secret/certs/letsencrypt/fullchain.pem:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
+      - ${PWD}/secret/certs/letsencrypt/privkey.pem:/etc/gitlab/ssl/git.int.valiants.co.key:ro
       # - ${PWD}/secret/certs/zerossl/fullchain.crt:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
       # - ${PWD}/secret/certs/zerossl/private.key:/etc/gitlab/ssl/git.int.valiants.co.key:ro
-      - ${PWD}/secret/certs/mkcert/git.int.crt:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
-      - ${PWD}/secret/certs/mkcert/git.int.key:/etc/gitlab/ssl/git.int.valiants.co.key:ro
-      - ${PWD}/config/gitlab.rb:/etc/gitlab/gitlab.rb
+      # - ${PWD}/secret/certs/mkcert/git.int.crt:/etc/gitlab/ssl/git.int.valiants.co.crt:ro
+      # - ${PWD}/secret/certs/mkcert/git.int.key:/etc/gitlab/ssl/git.int.valiants.co.key:ro
+
+      # need no_root_squash for these volumes to work (docker chown)
+      - "$GITLAB_HOME/data:/var/opt/gitlab"
       - "$GITLAB_HOME/config:/etc/gitlab"
       - "$GITLAB_HOME/logs:/var/log/gitlab"
 

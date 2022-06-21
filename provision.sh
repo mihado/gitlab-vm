@@ -5,9 +5,15 @@ chown -R vagrant:vagrant /home/vagrant/.ssh
 
 sudo apt-get update
 sudo apt-get install -y \
-  net-tools curl ntp \
+  direnv net-tools curl ntp \
   docker docker-compose
+
+echo 'eval "$(direnv hook bash)"' >> /home/vagrant/.bashrc
 
 echo "setting up docker..."
 sudo adduser vagrant docker
 newgrp docker
+
+echo "mounting volumes..."
+sudo mkdir -p /mnt/maus-data-gitlab
+sudo mount 192.168.0.10:/home/mihado/Services/.data/gitlab /mnt/maus-data-gitlab

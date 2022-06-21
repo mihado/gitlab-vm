@@ -22,6 +22,4 @@ docker-compose exec gitlab-runner gitlab-runner register
 
 # Open issue (job token cannot access internal job)
 # https://gitlab.com/gitlab-org/gitlab/-/issues/333444
-
-# https://NbV7GHcuxRNvWGMys2gh@git.int.valiants.co
 ```
